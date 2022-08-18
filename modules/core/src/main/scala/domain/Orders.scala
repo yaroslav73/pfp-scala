@@ -2,8 +2,8 @@ package domain
 
 import domain.Auth.UserId
 import domain.Items.ItemId
-import domain.Orders.{Order, OrderId, PaymentId}
-import domain.ShoppingCart.{CartItem, Quantity}
+import domain.Orders.{ Order, OrderId, PaymentId }
+import domain.ShoppingCart.{ CartItem, Quantity }
 import io.estatico.newtype.macros.newtype
 import squants.market.Money
 

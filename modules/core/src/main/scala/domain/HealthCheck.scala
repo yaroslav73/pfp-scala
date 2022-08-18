@@ -21,7 +21,6 @@ object HealthCheck {
   case class PostgresStatus(value: Status)
 
   @derive(encoder)
-  @newtype
   case class AppStatus(redis: RedisStatus, postgres: PostgresStatus)
 
   sealed trait Status

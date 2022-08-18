@@ -4,8 +4,6 @@ import domain.Auth.UserId
 import domain.Users.{ UserName, UserWithPassword }
 import io.estatico.newtype.macros.newtype
 
-import java.util.UUID
-
 trait Users[F[_]] {
   def find(username: UserName): F[Option[UserWithPassword]]
   def create(username: UserName): F[UserId]
