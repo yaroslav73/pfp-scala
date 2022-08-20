@@ -8,6 +8,7 @@ import io.estatico.newtype.macros.newtype
 import squants.market.Money
 
 import java.util.UUID
+import scala.util.control.NoStackTrace
 
 trait Orders[F[_]] {
   def get(userId: UserId, orderId: OrderId): F[Option[Order]]
@@ -25,4 +26,12 @@ object Orders {
     items: Map[ItemId, Quantity],
     total: Money
   )
+
+  case object EmptyCartError extends NoStackTrace
+
+  sealed trait OrderOrPaymentError extends NoStackTrace {
+    def cause: String
+  }
+  final case class OrderError(cause: String) extends OrderOrPaymentError
+  final case class PaymentError(cause: String) extends OrderOrPaymentError
 }
