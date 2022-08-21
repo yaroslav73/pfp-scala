@@ -1,7 +1,8 @@
 package domain
 
 import domain.Brands.{ Brand, BrandId, BrandName }
-import io.estatico.newtype.macros.newtype
+import io.circe.Encoder
+import io.circe.generic.semiauto.deriveEncoder
 
 import java.util.UUID
 
@@ -11,8 +12,13 @@ trait Brands[F[_]] {
 }
 
 object Brands {
-  @newtype case class BrandId(value: UUID)
-  @newtype case class BrandName(value: String)
+  case class BrandId(value: UUID)
+  case class BrandName(value: String)
 
   final case class Brand(uuid: BrandId, name: BrandName)
+  object Brand {
+    implicit val brandNameEncoder: Encoder[BrandName] = deriveEncoder[BrandName]
+    implicit val brandIdEncoder: Encoder[BrandId]     = deriveEncoder[BrandId]
+    implicit val brandEncoder: Encoder[Brand]         = deriveEncoder[Brand]
+  }
 }
