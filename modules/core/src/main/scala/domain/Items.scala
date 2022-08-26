@@ -3,8 +3,9 @@ package domain
 import domain.Brands.{ Brand, BrandId, BrandName }
 import domain.Categories.{ Category, CategoryId }
 import domain.Items.{ CreateItem, Item, ItemId, UpdateItem }
-import io.estatico.newtype.macros.newtype
-import squants.market.Money
+import io.circe.{ Encoder, Json }
+import io.circe.generic.semiauto.deriveEncoder
+import squants.market._
 
 import java.util.UUID
 
@@ -17,9 +18,9 @@ trait Items[F[_]] {
 }
 
 object Items {
-  @newtype case class ItemId(value: UUID)
-  @newtype case class ItemName(value: String)
-  @newtype case class ItemDescription(value: String)
+  case class ItemId(value: UUID)
+  case class ItemName(value: String)
+  case class ItemDescription(value: String)
 
   case class Item(
     uuid: ItemId,
@@ -29,6 +30,21 @@ object Items {
     brand: Brand,
     category: Category
   )
+
+  object Item {
+    implicit val moneyEncoder: Encoder[Money] = new Encoder[Money] {
+      override def apply(a: Money): Json =
+        Json.obj(
+          "value" -> Json.fromBigDecimal(a.amount),
+          "currency" -> Json.fromString(a.currency.code),
+        )
+    }
+
+    implicit val itemDescriptionEncoder: Encoder[ItemDescription] = deriveEncoder[ItemDescription]
+    implicit val itemNameEncoder: Encoder[ItemName]               = deriveEncoder[ItemName]
+    implicit val itemIdEncoder: Encoder[ItemId]                   = deriveEncoder[ItemId]
+    implicit val itemEncoder: Encoder[Item]                       = deriveEncoder[Item]
+  }
 
   case class CreateItem(
     name: ItemName,
