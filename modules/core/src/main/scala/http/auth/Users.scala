@@ -11,6 +11,8 @@ object Users {
   final case class User(id: UserId, name: UserName)
   final case class UserWithPassword(id: UserId, name: UserName, password: EncryptedPassword)
 
-  final case class CommonUser(user: User)
+  final case class CommonUser(user: User) {
+    def userId: UserId = user.id
+  }
   final case class AdminUser(user: User)
 }

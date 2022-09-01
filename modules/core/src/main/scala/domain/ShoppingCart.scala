@@ -4,7 +4,7 @@ import domain.Auth.UserId
 import domain.Items.{Item, ItemId}
 import domain.ShoppingCart.{Cart, CartTotal, Quantity}
 import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
-import io.circe.{Decoder, Encoder, KeyDecoder, KeyEncoder}
+import io.circe.{Decoder, Encoder, Json, KeyDecoder, KeyEncoder}
 import squants.market.Money
 
 import java.util.UUID
@@ -37,4 +37,11 @@ object ShoppingCart {
   }
   implicit val cartItemDecoder: Encoder[CartItem]   = deriveEncoder[CartItem]
   implicit val cartTotalDecoder: Encoder[CartTotal] = deriveEncoder[CartTotal]
+  implicit val moneyEncoder: Encoder[Money] = new Encoder[Money] {
+    override def apply(a: Money): Json =
+      Json.obj(
+        "value" -> Json.fromBigDecimal(a.amount),
+        "currency" -> Json.fromString(a.currency.code),
+      )
+  }
 }
