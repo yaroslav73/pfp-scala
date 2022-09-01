@@ -1,9 +1,9 @@
 package domain
 
-import domain.Brands.{ Brand, BrandId, BrandName }
-import domain.Categories.{ Category, CategoryId }
-import domain.Items.{ CreateItem, Item, ItemId, UpdateItem }
-import io.circe.{ Encoder, Json }
+import domain.Brands.{Brand, BrandId, BrandName}
+import domain.Categories.{Category, CategoryId}
+import domain.Items.{CreateItem, Item, ItemId, UpdateItem}
+import io.circe.Encoder
 import io.circe.generic.semiauto.deriveEncoder
 import squants.market._
 
@@ -32,14 +32,6 @@ object Items {
   )
 
   object Item {
-    implicit val moneyEncoder: Encoder[Money] = new Encoder[Money] {
-      override def apply(a: Money): Json =
-        Json.obj(
-          "value" -> Json.fromBigDecimal(a.amount),
-          "currency" -> Json.fromString(a.currency.code),
-        )
-    }
-
     implicit val itemDescriptionEncoder: Encoder[ItemDescription] = deriveEncoder[ItemDescription]
     implicit val itemNameEncoder: Encoder[ItemName]               = deriveEncoder[ItemName]
     implicit val itemIdEncoder: Encoder[ItemId]                   = deriveEncoder[ItemId]

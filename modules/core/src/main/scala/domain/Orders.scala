@@ -4,7 +4,7 @@ import domain.Auth.UserId
 import domain.Items.ItemId
 import domain.Orders.{ Order, OrderId, PaymentId }
 import domain.ShoppingCart.{ CartItem, Quantity }
-import io.circe.{ Encoder, Json, KeyEncoder }
+import io.circe.Encoder
 import io.circe.generic.semiauto.deriveEncoder
 import squants.market.Money
 
@@ -30,17 +30,7 @@ object Orders {
   object Order {
     implicit val orderIdEncoder: Encoder[OrderId]     = deriveEncoder[OrderId]
     implicit val paymentIdEncoder: Encoder[PaymentId] = deriveEncoder[PaymentId]
-    implicit val itemIdKeyEncoder: KeyEncoder[ItemId] = new KeyEncoder[ItemId] {
-      override def apply(key: ItemId): String = key.value.toString
-    }
-    implicit val moneyEncoder: Encoder[Money] = new Encoder[Money] {
-      override def apply(a: Money): Json =
-        Json.obj(
-          "value" -> Json.fromBigDecimal(a.amount),
-          "currency" -> Json.fromString(a.currency.code),
-        )
-    }
-    implicit val orderEncoder: Encoder[Order] = deriveEncoder[Order]
+    implicit val orderEncoder: Encoder[Order]         = deriveEncoder[Order]
   }
 
   case object EmptyCartError extends NoStackTrace
