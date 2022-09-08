@@ -2,8 +2,7 @@ package http.routes.secured
 
 import cats.Monad
 import cats.implicits.{ catsSyntaxApply, toFlatMapOps, toTraverseOps }
-import domain.ShoppingCart
-import domain.ShoppingCart.Cart
+import domain.Cart
 import http.Vars.ItemIdVar
 import http.auth.Users.CommonUser
 import io.circe.generic.codec.DerivedAsObjectCodec.deriveCodec
@@ -12,6 +11,7 @@ import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
 import org.http4s.circe.{ JsonDecoder, toMessageSyntax }
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.{ AuthMiddleware, Router }
+import services.ShoppingCart
 
 final case class CartRoutes[F[_]: JsonDecoder: Monad](shoppingCart: ShoppingCart[F]) extends Http4sDsl[F] {
   private[routes] val prefixPath = "/cart"

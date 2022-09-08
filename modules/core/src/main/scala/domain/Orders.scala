@@ -1,9 +1,9 @@
 package domain
 
 import domain.Auth.UserId
+import domain.Cart.{ CartItem, Quantity }
 import domain.Items.ItemId
 import domain.Orders.{ Order, OrderId, PaymentId }
-import domain.ShoppingCart.{ CartItem, Quantity }
 import io.circe.Encoder
 import io.circe.generic.semiauto.deriveEncoder
 import squants.market.Money

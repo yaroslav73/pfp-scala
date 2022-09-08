@@ -3,14 +3,14 @@ package programs
 import cats.MonadThrow
 import cats.implicits.{ catsSyntaxApplicativeError, catsSyntaxApply, catsSyntaxMonadError, toFlatMapOps, toFunctorOps }
 import domain.Auth.UserId
-import domain.Orders.{ EmptyCartError, OrderError, OrderId, PaymentError, PaymentId }
-import domain.Payment.Card
-import domain.ShoppingCart.{ CartItem, CartTotal }
-import domain.{ Orders, Payment, PaymentClient, ShoppingCart }
+import domain.Cart.{ CartItem, CartTotal }
+import domain.Orders._
+import domain.{ Card, Orders, Payment, PaymentClient }
 import effects.Background
 import org.typelevel.log4cats.Logger
 import retries.{ Retriable, Retry }
 import retry.RetryPolicy
+import services.ShoppingCart
 import squants.market.Money
 
 import scala.concurrent.duration.DurationInt
