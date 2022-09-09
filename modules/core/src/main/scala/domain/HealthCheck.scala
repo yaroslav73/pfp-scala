@@ -2,14 +2,9 @@ package domain
 
 import derevo.circe.magnolia.encoder
 import derevo.derive
-import domain.HealthCheck.AppStatus
 import io.circe.Encoder
 import io.estatico.newtype.macros.newtype
 import monocle.Iso
-
-trait HealthCheck[F[_]] {
-  def status: F[AppStatus]
-}
 
 object HealthCheck {
   @derive(encoder)
