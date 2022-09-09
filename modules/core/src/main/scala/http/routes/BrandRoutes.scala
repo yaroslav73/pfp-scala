@@ -1,11 +1,11 @@
 package http.routes
 
 import cats.Monad
-import domain.Brands
 import org.http4s.HttpRoutes
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
+import services.Brands
 
 final case class BrandRoutes[F[_]: Monad](brands: Brands[F]) extends Http4sDsl[F] {
   private[routes] val prefixPath = "/brands"

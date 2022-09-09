@@ -1,17 +1,11 @@
 package domain
 
-import domain.Brands.{Brand, BrandId, BrandName}
 import eu.timepit.refined.types.string.NonEmptyString
-import io.circe.{Decoder, Encoder}
 import io.circe.generic.semiauto.deriveEncoder
-import io.circe.refined.{refinedDecoder, refinedEncoder}
+import io.circe.refined.{ refinedDecoder, refinedEncoder }
+import io.circe.{ Decoder, Encoder }
 
 import java.util.UUID
-
-trait Brands[F[_]] {
-  def findAll: F[List[Brand]]
-  def create(name: BrandName): F[BrandId]
-}
 
 object Brands {
   case class BrandId(value: UUID)

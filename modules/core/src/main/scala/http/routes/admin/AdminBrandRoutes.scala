@@ -2,7 +2,6 @@ package http.routes.admin
 
 import cats.MonadThrow
 import cats.implicits.toFlatMapOps
-import domain.Brands
 import domain.Brands.Brand.brandIdEncoder
 import domain.Brands.BrandParam
 import http.auth.Users.AdminUser
@@ -14,6 +13,7 @@ import org.http4s.circe.JsonDecoder
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.{ AuthMiddleware, Router }
 import org.http4s.{ AuthedRoutes, HttpRoutes }
+import services.Brands
 
 final case class AdminBrandRoutes[F[_]: JsonDecoder: MonadThrow](brands: Brands[F]) extends Http4sDsl[F] {
   private[routes] val prefixPath = "/brands"
