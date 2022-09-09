@@ -3,12 +3,12 @@ package http.routes
 import cats.Monad
 import cats.implicits.toBifunctorOps
 import domain.Brands.BrandParam
-import domain.Items
 import eu.timepit.refined.types.string.NonEmptyString
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
 import org.http4s.{ HttpRoutes, ParseFailure, QueryParamDecoder }
+import services.Items
 
 final case class ItemsRoutes[F[_]: Monad](items: Items[F]) extends Http4sDsl[F] {
   private[routes] val prefixPath = "/items"
