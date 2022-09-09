@@ -1,8 +1,7 @@
 package http.auth
 
 import dev.profunktor.auth.jwt.JwtSymmetricAuth
-import domain.Auth.UserId
-import domain.Users.{ EncryptedPassword, UserName }
+import domain.Auth.{EncryptedPassword, UserId, UserName}
 
 object Users {
   final case class AdminJwtAuth(value: JwtSymmetricAuth)
