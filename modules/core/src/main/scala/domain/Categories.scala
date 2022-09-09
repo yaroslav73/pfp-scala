@@ -1,17 +1,11 @@
 package domain
 
-import domain.Categories.{ Category, CategoryId, CategoryName }
 import eu.timepit.refined.types.string.NonEmptyString
-import io.circe.{ Decoder, Encoder }
 import io.circe.generic.semiauto.deriveEncoder
 import io.circe.refined.{ refinedDecoder, refinedEncoder }
+import io.circe.{ Decoder, Encoder }
 
 import java.util.UUID
-
-trait Categories[F[_]] {
-  def findAll: F[List[Category]]
-  def create(name: CategoryName): F[CategoryId]
-}
 
 object Categories {
   case class CategoryId(value: UUID)
