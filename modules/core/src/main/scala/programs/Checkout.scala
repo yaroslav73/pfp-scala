@@ -5,8 +5,9 @@ import cats.implicits.{ catsSyntaxApplicativeError, catsSyntaxApply, catsSyntaxM
 import domain.Auth.UserId
 import domain.Cart.{ CartItem, CartTotal }
 import domain.Orders._
-import domain.{ Card, Payment, PaymentClient }
+import domain.{ Card, Payment }
 import effects.Background
+import http.routes.clients.PaymentClient
 import org.typelevel.log4cats.Logger
 import retries.{ Retriable, Retry }
 import retry.RetryPolicy
