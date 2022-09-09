@@ -12,6 +12,7 @@ object Users {
 
   final case class CommonUser(user: User) {
     def userId: UserId = user.id
+    def userName: UserName = user.name
   }
   final case class AdminUser(user: User)
 }

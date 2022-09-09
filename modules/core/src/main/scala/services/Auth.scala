@@ -1,6 +1,7 @@
 package services
 
-import domain.Auth.{JwtToken, Password, User, UserName}
+import dev.profunktor.auth.jwt.JwtToken
+import domain.Auth.{Password, User, UserName}
 
 trait Auth[F[_]] {
   def findUser(token: JwtToken): F[Option[User]]

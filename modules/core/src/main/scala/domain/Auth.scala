@@ -14,7 +14,6 @@ object Auth {
   final case class UserName(value: String)
   final case class Password(value: String)
   final case class EncryptedPassword(value: String)
-  final case class JwtToken(value: String)
 
   final case class User(id: UserId, name: UserName)
 
