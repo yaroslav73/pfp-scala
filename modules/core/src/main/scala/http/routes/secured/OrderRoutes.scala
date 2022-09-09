@@ -1,13 +1,13 @@
 package http.routes.secured
 
 import cats.Monad
-import domain.Orders
 import http.Vars.OrderIdVar
 import http.auth.Users.CommonUser
-import org.http4s.{ AuthedRoutes, HttpRoutes }
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.{ AuthMiddleware, Router }
+import org.http4s.{ AuthedRoutes, HttpRoutes }
+import services.Orders
 
 final case class OrderRoutes[F[_]: Monad](orders: Orders[F]) extends Http4sDsl[F] {
   private[routes] val prefixPath = "/orders"

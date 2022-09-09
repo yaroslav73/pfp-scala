@@ -1,21 +1,13 @@
 package domain
 
-import domain.Auth.UserId
-import domain.Cart.{ CartItem, Quantity }
+import domain.Cart.Quantity
 import domain.Items.ItemId
-import domain.Orders.{ Order, OrderId, PaymentId }
 import io.circe.Encoder
 import io.circe.generic.semiauto.deriveEncoder
 import squants.market.Money
 
 import java.util.UUID
 import scala.util.control.NoStackTrace
-
-trait Orders[F[_]] {
-  def get(userId: UserId, orderId: OrderId): F[Option[Order]]
-  def findBy(userId: UserId): F[List[Order]]
-  def create(userId: UserId, paymentId: PaymentId, items: List[CartItem], total: Money): F[OrderId]
-}
 
 object Orders {
   final case class OrderId(uuid: UUID)

@@ -5,12 +5,12 @@ import cats.implicits.{ catsSyntaxApplicativeError, catsSyntaxApply, catsSyntaxM
 import domain.Auth.UserId
 import domain.Cart.{ CartItem, CartTotal }
 import domain.Orders._
-import domain.{ Card, Orders, Payment, PaymentClient }
+import domain.{ Card, Payment, PaymentClient }
 import effects.Background
 import org.typelevel.log4cats.Logger
 import retries.{ Retriable, Retry }
 import retry.RetryPolicy
-import services.ShoppingCart
+import services.{ Orders, ShoppingCart }
 import squants.market.Money
 
 import scala.concurrent.duration.DurationInt
