@@ -6,9 +6,9 @@ import eu.timepit.refined.boolean.And
 import eu.timepit.refined.collection.Size
 import eu.timepit.refined.string.{ MatchesRegex, ValidInt }
 import ext.Refined._
-import io.circe.Decoder
+import io.circe.{ Decoder, Encoder }
 import io.circe.refined._
-import io.circe.generic.semiauto.deriveDecoder
+import io.circe.generic.semiauto.{ deriveDecoder, deriveEncoder }
 
 final case class Card(
   name: CardHolder,
@@ -33,8 +33,13 @@ object Card {
   final case class CVV(value: CardCVVPredicate)
 
   implicit val cardHolderDecoder: Decoder[CardHolder]     = deriveDecoder[CardHolder]
+  implicit val cardHolderEncoder: Encoder[CardHolder]     = deriveEncoder[CardHolder]
   implicit val cardNumberDecoder: Decoder[CardNumber]     = decoderOf[Long, Size[16]].map(CardNumber)
+  implicit val cardNumberEncoder: Encoder[CardNumber]     = deriveEncoder[CardNumber]
   implicit val cardExpirationDecoder: Decoder[Expiration] = decoderOf[String, Size[4] And ValidInt].map(Expiration)
+  implicit val cardExpirationEncoder: Encoder[Expiration] = deriveEncoder[Expiration]
   implicit val cvvDecoder: Decoder[CVV]                   = decoderOf[Int, Size[3]].map(CVV)
+  implicit val cvvEncoder: Encoder[CVV]                   = deriveEncoder[CVV]
   implicit val cardDecoder: Decoder[Card]                 = deriveDecoder[Card]
+  implicit val cardEncoder: Encoder[Card]                 = deriveEncoder[Card]
 }

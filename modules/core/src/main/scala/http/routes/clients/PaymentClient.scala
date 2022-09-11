@@ -1,8 +1,40 @@
 package http.routes.clients
 
-import domain.Orders.PaymentId
+import cats.effect.kernel.MonadCancelThrow
+import cats.implicits.{catsSyntaxApplicativeErrorId, catsSyntaxEither, toFlatMapOps}
+import domain.Orders.{PaymentError, PaymentId}
 import domain.Payment
+import io.circe.generic.codec.DerivedAsObjectCodec.deriveCodec
+import org.http4s.Method.POST
+import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
+import org.http4s.circe.{JsonDecoder, toMessageSyntax}
+import org.http4s.client.Client
+import org.http4s.client.dsl.Http4sClientDsl
+import org.http4s.{Status, Uri}
 
 trait PaymentClient[F[_]] {
   def process(payment: Payment): F[PaymentId]
+}
+
+object PaymentClient {
+  def make[F[_]: JsonDecoder: MonadCancelThrow](client: Client[F]): PaymentClient[F] = {
+    new PaymentClient[F] with Http4sClientDsl[F] {
+      val baseUri = "http: //localhost:8080/api/v1"
+
+      def process(payment: Payment): F[PaymentId] =
+        Uri
+          .fromString(baseUri + "/payments")
+          .liftTo[F]
+          .flatMap { uri =>
+            client.run(POST(payment, uri)).use { resp =>
+              resp.status match {
+                case Status.Ok | Status.Conflict =>
+                  resp.asJsonDecode[PaymentId]
+                case status =>
+                  PaymentError(Option(status.reason).getOrElse("unknown")).raiseError[F, PaymentId]
+              }
+            }
+          }
+    }
+  }
 }
