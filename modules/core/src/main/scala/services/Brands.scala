@@ -3,8 +3,8 @@ package services
 import cats.effect.MonadCancelThrow
 import cats.effect.kernel.Resource
 import cats.implicits.{ toFlatMapOps, toFunctorOps }
-import domain.Brands.{ Brand, BrandId, BrandName }
-import domain.ID
+import domain.Brand.{ BrandId, BrandName }
+import domain.{ Brand, ID }
 import effects.GenUUID
 import skunk._
 import skunk.implicits._

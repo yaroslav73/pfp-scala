@@ -2,8 +2,8 @@ package http.routes.admin
 
 import cats.MonadThrow
 import cats.implicits.toFlatMapOps
-import domain.Brands.Brand.brandIdEncoder
-import domain.Brands.BrandParam
+import domain.Brand.brandIdEncoder
+import domain.Brand.BrandParam
 import http.auth.Users.AdminUser
 import http.routes.RefinedRequestDecoder
 import io.circe.JsonObject

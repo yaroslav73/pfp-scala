@@ -2,7 +2,7 @@ package http.routes
 
 import cats.Monad
 import cats.implicits.toBifunctorOps
-import domain.Brands.BrandParam
+import domain.Brand.BrandParam
 import eu.timepit.refined.types.string.NonEmptyString
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
 import org.http4s.dsl.Http4sDsl

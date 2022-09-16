@@ -1,6 +1,6 @@
 package sql
 
-import domain.Brands.{ BrandId, BrandName }
+import domain.Brand.{ BrandId, BrandName }
 import skunk._
 import skunk.codec.all._
 

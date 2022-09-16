@@ -1,6 +1,6 @@
 package services
 
-import domain.Brands.BrandName
+import domain.Brand.BrandName
 import domain.Items.{ CreateItem, Item, ItemId, UpdateItem }
 
 trait Items[F[_]] {

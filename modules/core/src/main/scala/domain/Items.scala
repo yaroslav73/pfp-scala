@@ -1,6 +1,6 @@
 package domain
 
-import domain.Brands.{ Brand, BrandId }
+import domain.Brand.BrandId
 import domain.Categories.{ Category, CategoryId }
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.string.{ Uuid, ValidBigDecimal }
