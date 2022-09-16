@@ -4,11 +4,18 @@ import eu.timepit.refined.types.string.NonEmptyString
 import io.circe.generic.semiauto.deriveEncoder
 import io.circe.refined.{ refinedDecoder, refinedEncoder }
 import io.circe.{ Decoder, Encoder }
+import monocle.{ Iso, PIso }
+import optics.IsUUID
 
 import java.util.UUID
 
 object Brands {
   case class BrandId(value: UUID)
+  object BrandId {
+    implicit val isBrandId: IsUUID[BrandId] = new IsUUID[BrandId] {
+      def _UUID: Iso[UUID, BrandId] = Iso[UUID, BrandId](uuid => BrandId(uuid))(brandId => brandId.value)
+    }
+  }
   case class BrandName(value: String)
 
   case class BrandParam(value: NonEmptyString) {
