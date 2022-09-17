@@ -1,13 +1,13 @@
 package domain
 
 import domain.Brand.BrandId
-import domain.Categories.{ Category, CategoryId }
+import domain.Category.CategoryId
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.string.{ Uuid, ValidBigDecimal }
 import eu.timepit.refined.types.string.NonEmptyString
-import io.circe.{ Decoder, Encoder }
 import io.circe.generic.semiauto.deriveEncoder
 import io.circe.refined.{ refinedDecoder, refinedEncoder }
+import io.circe.{ Decoder, Encoder }
 import squants.market._
 
 import java.util.UUID

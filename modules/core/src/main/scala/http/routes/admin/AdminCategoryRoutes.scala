@@ -2,8 +2,8 @@ package http.routes.admin
 
 import cats.MonadThrow
 import cats.implicits.toFlatMapOps
-import domain.Categories.Category.categoryIdEncoder
-import domain.Categories.CategoryParam
+import domain.Category.categoryIdEncoder
+import domain.Category.CategoryParam
 import http.auth.Users.AdminUser
 import http.routes.RefinedRequestDecoder
 import io.circe.JsonObject

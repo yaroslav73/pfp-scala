@@ -1,6 +1,7 @@
 package services
 
-import domain.Categories.{ Category, CategoryId, CategoryName }
+import domain.Category
+import domain.Category.{ CategoryId, CategoryName }
 
 trait Categories[F[_]] {
   def findAll: F[List[Category]]
