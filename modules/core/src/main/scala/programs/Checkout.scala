@@ -4,7 +4,7 @@ import cats.MonadThrow
 import cats.implicits.{ catsSyntaxApplicativeError, catsSyntaxApply, catsSyntaxMonadError, toFlatMapOps, toFunctorOps }
 import domain.Auth.UserId
 import domain.Cart.{ CartItem, CartTotal }
-import domain.Orders._
+import domain.Order._
 import domain.{ Card, Payment }
 import effects.Background
 import http.routes.clients.PaymentClient

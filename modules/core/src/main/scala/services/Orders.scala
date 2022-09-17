@@ -4,9 +4,9 @@ import cats.effect.kernel.{ Concurrent, Resource }
 import cats.implicits.{ toFlatMapOps, toFunctorOps }
 import domain.Auth.UserId
 import domain.Cart.{ CartItem, Quantity }
-import domain.ID
+import domain.{ ID, Order }
 import domain.Item.ItemId
-import domain.Orders.{ Order, OrderId, PaymentId }
+import domain.Order.{ OrderId, PaymentId }
 import effects.GenUUID
 import skunk._
 import skunk.circe.codec.all.jsonb

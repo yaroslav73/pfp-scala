@@ -1,16 +1,16 @@
 package http.routes.clients
 
 import cats.effect.kernel.MonadCancelThrow
-import cats.implicits.{catsSyntaxApplicativeErrorId, catsSyntaxEither, toFlatMapOps}
-import domain.Orders.{PaymentError, PaymentId}
+import cats.implicits.{ catsSyntaxApplicativeErrorId, catsSyntaxEither, toFlatMapOps }
+import domain.Order.{ PaymentError, PaymentId }
 import domain.Payment
 import io.circe.generic.codec.DerivedAsObjectCodec.deriveCodec
 import org.http4s.Method.POST
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
-import org.http4s.circe.{JsonDecoder, toMessageSyntax}
+import org.http4s.circe.{ JsonDecoder, toMessageSyntax }
 import org.http4s.client.Client
 import org.http4s.client.dsl.Http4sClientDsl
-import org.http4s.{Status, Uri}
+import org.http4s.{ Status, Uri }
 
 trait PaymentClient[F[_]] {
   def process(payment: Payment): F[PaymentId]

@@ -5,7 +5,7 @@ import domain.Auth.UserId
 import domain.Brand.{ BrandId, BrandName }
 import domain.Category.{ CategoryId, CategoryName }
 import domain.Item.{ ItemDescription, ItemId, ItemName }
-import domain.Orders.{ OrderId, PaymentId }
+import domain.Order.{ OrderId, PaymentId }
 import skunk._
 import skunk.codec.all._
 import squants.market.{ Money, USD }

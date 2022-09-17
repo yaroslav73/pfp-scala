@@ -4,8 +4,8 @@ import cats.MonadThrow
 import cats.implicits.{ catsSyntaxApplicativeError, toFlatMapOps }
 import domain.Card
 import domain.Cart.CartNotFound
-import domain.Orders.Order.orderIdEncoder
-import domain.Orders.{ EmptyCartError, OrderOrPaymentError }
+import domain.Order.orderIdEncoder
+import domain.Order.{ EmptyCartError, OrderOrPaymentError }
 import http.auth.Users.CommonUser
 import http.routes.RefinedRequestDecoder
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
