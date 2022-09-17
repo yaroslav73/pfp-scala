@@ -1,8 +1,11 @@
 package sql
 
+import domain.Auth
+import domain.Auth.UserId
 import domain.Brand.{ BrandId, BrandName }
 import domain.Category.{ CategoryId, CategoryName }
 import domain.Item.{ ItemDescription, ItemId, ItemName }
+import domain.Orders.{ OrderId, PaymentId }
 import skunk._
 import skunk.codec.all._
 import squants.market.{ Money, USD }
@@ -17,6 +20,12 @@ object Codecs {
   val itemId: Codec[ItemId]            = uuid.imap[ItemId](uuid => ItemId(uuid))(itemId => itemId.value)
   val itemName: Codec[ItemName]        = varchar.imap[ItemName](name => ItemName(name))(itemName => itemName.value)
   val itemDesc: Codec[ItemDescription] = varchar.imap[ItemDescription](ItemDescription)(_.value)
+
+  val orderId: Codec[OrderId] = uuid.imap[OrderId](uuid => OrderId(uuid))(orderId => orderId.uuid)
+
+  val userId: Codec[UserId] = uuid.imap[UserId](uuid => UserId(uuid))(userId => userId.value)
+
+  val paymentId: Codec[PaymentId] = uuid.imap[PaymentId](uuid => PaymentId(uuid))(paymentId => paymentId.uuid)
 
   val money: Codec[Money] = numeric.imap[Money](price => Money(price, USD))(money => money.amount)
 }

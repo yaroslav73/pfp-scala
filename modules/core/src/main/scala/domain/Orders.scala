@@ -4,6 +4,8 @@ import domain.Cart.Quantity
 import domain.Item.ItemId
 import io.circe.Encoder
 import io.circe.generic.semiauto.deriveEncoder
+import monocle.Iso
+import optics.IsUUID
 import squants.market.Money
 
 import java.util.UUID
@@ -11,6 +13,11 @@ import scala.util.control.NoStackTrace
 
 object Orders {
   final case class OrderId(uuid: UUID)
+  object OrderId {
+    implicit val isOrderId: IsUUID[OrderId] = new IsUUID[OrderId] {
+      def _UUID: Iso[UUID, OrderId] = Iso[UUID, OrderId](uuid => OrderId(uuid))(orderId => orderId.uuid)
+    }
+  }
   final case class PaymentId(uuid: UUID)
 
   case class Order(
