@@ -17,6 +17,6 @@ package object domain {
     override def apply(key: ItemId): String = key.value.toString
   }
   implicit val itemIdKeyDecoder: KeyDecoder[ItemId] = new KeyDecoder[ItemId] {
-    override def apply(key: String): Option[ItemId] = Try(UUID.fromString(key)).map(ItemId).toOption
+    override def apply(key: String): Option[ItemId] = Try(UUID.fromString(key)).map(uuid => ItemId(uuid)).toOption
   }
 }

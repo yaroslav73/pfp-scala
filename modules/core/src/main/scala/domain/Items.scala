@@ -8,12 +8,19 @@ import eu.timepit.refined.types.string.NonEmptyString
 import io.circe.generic.semiauto.deriveEncoder
 import io.circe.refined.{ refinedDecoder, refinedEncoder }
 import io.circe.{ Decoder, Encoder }
+import monocle.Iso
+import optics.IsUUID
 import squants.market._
 
 import java.util.UUID
 
 object Items {
   case class ItemId(value: UUID)
+  object ItemId {
+    implicit val isItemId: IsUUID[ItemId] = new IsUUID[ItemId] {
+      def _UUID: Iso[UUID, ItemId] = Iso[UUID, ItemId](uuid => ItemId(uuid))(itemId => itemId.value)
+    }
+  }
   case class ItemName(value: String)
   case class ItemDescription(value: String)
 
