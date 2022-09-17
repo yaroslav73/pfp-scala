@@ -5,6 +5,8 @@ import eu.timepit.refined.types.string.NonEmptyString
 import io.circe.generic.semiauto.deriveEncoder
 import io.circe.refined.{ refinedDecoder, refinedEncoder }
 import io.circe.{ Decoder, Encoder }
+import monocle.Iso
+import optics.IsUUID
 
 import java.util.UUID
 
@@ -24,6 +26,10 @@ object Category {
 
     implicit val jsonDecoder: Decoder[CategoryParam] =
       Decoder.forProduct1("name")(CategoryParam.apply)
+  }
+
+  implicit val isCategoryId: IsUUID[CategoryId] = new IsUUID[CategoryId] {
+    def _UUID: Iso[UUID, CategoryId] = Iso[UUID, CategoryId](uuid => CategoryId(uuid))(categoryId => categoryId.value)
   }
 
   implicit val categoryNameEncoder: Encoder[CategoryName] = deriveEncoder[CategoryName]
