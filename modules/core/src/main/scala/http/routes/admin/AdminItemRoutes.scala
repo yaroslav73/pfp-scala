@@ -2,7 +2,7 @@ package http.routes.admin
 
 import cats.MonadThrow
 import cats.implicits.{ catsSyntaxFlatMapOps, toFlatMapOps }
-import domain.Items.{ CreateItemParam, UpdateItemParam }
+import domain.Item.{ CreateItemParam, UpdateItemParam }
 import http.auth.Users.AdminUser
 import http.routes.RefinedRequestDecoder
 import io.circe.JsonObject

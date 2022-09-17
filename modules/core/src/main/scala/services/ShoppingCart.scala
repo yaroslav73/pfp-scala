@@ -3,7 +3,7 @@ package services
 import domain.Auth.UserId
 import domain.Cart
 import domain.Cart.{ CartTotal, Quantity }
-import domain.Items.ItemId
+import domain.Item.ItemId
 
 trait ShoppingCart[F[_]] {
   def add(userId: UserId, itemId: ItemId, quantity: Quantity): F[Unit]

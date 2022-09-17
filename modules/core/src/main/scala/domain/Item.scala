@@ -2,6 +2,7 @@ package domain
 
 import domain.Brand.BrandId
 import domain.Category.CategoryId
+import domain.Item.{ ItemDescription, ItemId, ItemName }
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.string.{ Uuid, ValidBigDecimal }
 import eu.timepit.refined.types.string.NonEmptyString
@@ -14,32 +15,29 @@ import squants.market._
 
 import java.util.UUID
 
-object Items {
+case class Item(
+  uuid: ItemId,
+  name: ItemName,
+  description: ItemDescription,
+  price: Money,
+  brand: Brand,
+  category: Category
+)
+object Item {
   case class ItemId(value: UUID)
+
   object ItemId {
     implicit val isItemId: IsUUID[ItemId] = new IsUUID[ItemId] {
       def _UUID: Iso[UUID, ItemId] = Iso[UUID, ItemId](uuid => ItemId(uuid))(itemId => itemId.value)
     }
   }
+
   case class ItemName(value: String)
+
   case class ItemDescription(value: String)
 
-  case class Item(
-    uuid: ItemId,
-    name: ItemName,
-    description: ItemDescription,
-    price: Money,
-    brand: Brand,
-    category: Category
-  )
-  object Item {
-    implicit val itemDescriptionEncoder: Encoder[ItemDescription] = deriveEncoder[ItemDescription]
-    implicit val itemNameEncoder: Encoder[ItemName]               = deriveEncoder[ItemName]
-    implicit val itemIdEncoder: Encoder[ItemId]                   = deriveEncoder[ItemId]
-    implicit val itemEncoder: Encoder[Item]                       = deriveEncoder[Item]
-  }
-
   final case class ItemNameParam(value: NonEmptyString)
+
   object ItemNameParam {
     implicit val jsonEncoder: Encoder[ItemNameParam] =
       Encoder.forProduct1("name")(_.value)
@@ -49,6 +47,7 @@ object Items {
   }
 
   final case class ItemDescriptionPram(value: NonEmptyString)
+
   object ItemDescriptionPram {
     implicit val jsonEncoder: Encoder[ItemDescriptionPram] =
       Encoder.forProduct1("name")(_.value)
@@ -58,6 +57,7 @@ object Items {
   }
 
   final case class PriceParam(value: String Refined ValidBigDecimal)
+
   object PriceParam {
     implicit val jsonEncoder: Encoder[PriceParam] =
       Encoder.forProduct1("name")(_.value)
@@ -92,6 +92,7 @@ object Items {
   )
 
   final case class ItemIdParam(value: String Refined Uuid)
+
   object ItemIdParam {
     implicit val jsonEncoder: Encoder[ItemIdParam] =
       Encoder.forProduct1("name")(_.value)
@@ -105,4 +106,9 @@ object Items {
   }
 
   final case class UpdateItem(itemId: ItemId, price: Money)
+
+  implicit val itemDescriptionEncoder: Encoder[ItemDescription] = deriveEncoder[ItemDescription]
+  implicit val itemNameEncoder: Encoder[ItemName]               = deriveEncoder[ItemName]
+  implicit val itemIdEncoder: Encoder[ItemId]                   = deriveEncoder[ItemId]
+  implicit val itemEncoder: Encoder[Item]                       = deriveEncoder[Item]
 }

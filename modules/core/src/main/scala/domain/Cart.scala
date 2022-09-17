@@ -2,7 +2,7 @@ package domain
 
 import domain.Auth.UserId
 import domain.Cart.Quantity
-import domain.Items.{ Item, ItemId }
+import domain.Item.ItemId
 import io.circe.{ Decoder, Encoder }
 import io.circe.generic.semiauto.{ deriveDecoder, deriveEncoder }
 import squants.market.Money

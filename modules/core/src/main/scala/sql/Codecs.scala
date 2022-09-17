@@ -2,7 +2,7 @@ package sql
 
 import domain.Brand.{ BrandId, BrandName }
 import domain.Category.{ CategoryId, CategoryName }
-import domain.Items.{ ItemDescription, ItemId, ItemName }
+import domain.Item.{ ItemDescription, ItemId, ItemName }
 import skunk._
 import skunk.codec.all._
 import squants.market.{ Money, USD }

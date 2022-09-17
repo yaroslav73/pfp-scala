@@ -1,4 +1,4 @@
-import domain.Items.ItemId
+import domain.Item.ItemId
 import io.circe.{ Encoder, Json, KeyDecoder, KeyEncoder }
 import squants.market.Money
 

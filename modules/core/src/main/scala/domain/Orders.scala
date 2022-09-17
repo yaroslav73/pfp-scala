@@ -1,7 +1,7 @@
 package domain
 
 import domain.Cart.Quantity
-import domain.Items.ItemId
+import domain.Item.ItemId
 import io.circe.Encoder
 import io.circe.generic.semiauto.deriveEncoder
 import squants.market.Money

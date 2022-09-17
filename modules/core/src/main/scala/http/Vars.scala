@@ -1,6 +1,6 @@
 package http
 
-import domain.Items.ItemId
+import domain.Item.ItemId
 import domain.Orders.OrderId
 import java.util.UUID
 import cats.syntax.either._

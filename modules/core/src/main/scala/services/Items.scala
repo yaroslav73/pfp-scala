@@ -4,8 +4,8 @@ import cats.effect.Concurrent
 import cats.effect.kernel.Resource
 import cats.implicits.{ toFlatMapOps, toFunctorOps }
 import domain.Brand.BrandName
-import domain.{ Brand, Category, ID }
-import domain.Items.{ CreateItem, Item, ItemId, UpdateItem }
+import domain.{ Brand, Category, ID, Item }
+import domain.Item.{ CreateItem, ItemId, UpdateItem }
 import effects.GenUUID
 import skunk._
 import skunk.implicits._
