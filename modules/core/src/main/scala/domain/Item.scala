@@ -1,6 +1,7 @@
 package domain
 
 import domain.Brand.BrandId
+import domain.Cart.{ CartItem, Quantity }
 import domain.Category.CategoryId
 import domain.Item.{ ItemDescription, ItemId, ItemName }
 import eu.timepit.refined.api.Refined
@@ -22,7 +23,10 @@ case class Item(
   price: Money,
   brand: Brand,
   category: Category
-)
+) {
+  def cart(quantity: Quantity): CartItem =
+    CartItem(this, quantity)
+}
 object Item {
   case class ItemId(value: UUID)
 
