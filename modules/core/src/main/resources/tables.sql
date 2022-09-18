@@ -37,3 +37,10 @@ CREATE TABLE orders
         REFERENCES users (uuid) MATCH SIMPLE
         ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+
+CREATE TABLE users
+(
+    uuid     UUID PRIMARY KEY,
+    name     VARCHAR UNIQUE NOT NULL,
+    password VARCHAR        NOT NULL
+);

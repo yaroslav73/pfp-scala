@@ -5,6 +5,8 @@ import eu.timepit.refined.types.string.NonEmptyString
 import io.circe.Decoder.Result
 import io.circe.{ Decoder, DecodingFailure, Encoder, HCursor }
 import io.circe.generic.semiauto.{ deriveDecoder, deriveEncoder }
+import monocle.Iso
+import optics.IsUUID
 
 import java.util.UUID
 import scala.util.control.NoStackTrace
@@ -34,6 +36,9 @@ object Auth {
 
   case object TokenNotFound extends NoStackTrace
 
+  implicit val isUserId: IsUUID[UserId] = new IsUUID[UserId] {
+    def _UUID: Iso[UUID, UserId] = Iso[UUID, UserId](uuid => UserId(uuid))(userId => userId.value)
+  }
   implicit val userIdEncoder: Encoder[UserId] = deriveEncoder[UserId]
   implicit val userNameParamDecoder: Decoder[UserNameParam] = new Decoder[UserNameParam] {
     override def apply(c: HCursor): Result[UserNameParam] =

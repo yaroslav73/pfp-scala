@@ -1,7 +1,7 @@
 package sql
 
 import domain.Auth
-import domain.Auth.UserId
+import domain.Auth.{ EncryptedPassword, UserId, UserName }
 import domain.Brand.{ BrandId, BrandName }
 import domain.Category.{ CategoryId, CategoryName }
 import domain.Item.{ ItemDescription, ItemId, ItemName }
@@ -23,7 +23,11 @@ object Codecs {
 
   val orderId: Codec[OrderId] = uuid.imap[OrderId](uuid => OrderId(uuid))(orderId => orderId.uuid)
 
-  val userId: Codec[UserId] = uuid.imap[UserId](uuid => UserId(uuid))(userId => userId.value)
+  val userId: Codec[UserId]     = uuid.imap[UserId](uuid => UserId(uuid))(userId => userId.value)
+  val userName: Codec[UserName] = varchar.imap[UserName](name => UserName(name))(userName => userName.value)
+  val encryptedPassword: Codec[EncryptedPassword] =
+    varchar
+      .imap[EncryptedPassword](password => EncryptedPassword(password))(encryptedPassword => encryptedPassword.value)
 
   val paymentId: Codec[PaymentId] = uuid.imap[PaymentId](uuid => PaymentId(uuid))(paymentId => paymentId.uuid)
 
