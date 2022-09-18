@@ -2,7 +2,7 @@ package http.routes.secured
 
 import cats.Monad
 import http.Vars.OrderIdVar
-import http.auth.Users.CommonUser
+import http.auth.User.CommonUser
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.{ AuthMiddleware, Router }

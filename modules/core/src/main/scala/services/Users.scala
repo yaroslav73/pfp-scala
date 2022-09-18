@@ -13,7 +13,7 @@ import cats.implicits.{
 import domain.Auth.{ EncryptedPassword, User, UserId, UserName, UserNameExist }
 import domain.ID
 import effects.GenUUID
-import http.auth.Users.UserWithPassword
+import http.auth.User.UserWithPassword
 import skunk._
 import skunk.implicits._
 

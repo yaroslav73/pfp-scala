@@ -4,7 +4,7 @@ import cats.Monad
 import cats.implicits.{ catsSyntaxApply, toFlatMapOps, toTraverseOps }
 import domain.Cart
 import http.Vars.ItemIdVar
-import http.auth.Users.CommonUser
+import http.auth.User.CommonUser
 import io.circe.generic.codec.DerivedAsObjectCodec.deriveCodec
 import org.http4s.{ AuthedRoutes, HttpRoutes }
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder

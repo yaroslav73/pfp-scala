@@ -4,7 +4,7 @@ import cats.MonadThrow
 import cats.implicits.toFlatMapOps
 import domain.Brand.brandIdEncoder
 import domain.Brand.BrandParam
-import http.auth.Users.AdminUser
+import http.auth.User.AdminUser
 import http.routes.RefinedRequestDecoder
 import io.circe.JsonObject
 import io.circe.syntax.EncoderOps

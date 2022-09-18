@@ -6,7 +6,7 @@ import domain.Card
 import domain.Cart.CartNotFound
 import domain.Order.orderIdEncoder
 import domain.Order.{ EmptyCartError, OrderOrPaymentError }
-import http.auth.Users.CommonUser
+import http.auth.User.CommonUser
 import http.routes.RefinedRequestDecoder
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
 import org.http4s.circe.JsonDecoder
