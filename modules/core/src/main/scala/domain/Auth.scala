@@ -4,8 +4,8 @@ import cats.implicits.toBifunctorOps
 import dev.profunktor.auth.jwt.JwtToken
 import eu.timepit.refined.types.string.NonEmptyString
 import io.circe.Decoder.Result
-import io.circe.{Decoder, DecodingFailure, Encoder, HCursor}
-import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
+import io.circe.generic.semiauto.{ deriveDecoder, deriveEncoder }
+import io.circe.{ Decoder, DecodingFailure, Encoder, HCursor }
 import monocle.Iso
 import optics.IsUUID
 
@@ -17,8 +17,6 @@ object Auth {
   final case class UserName(value: String)
   final case class Password(value: String)
   final case class EncryptedPassword(value: String)
-
-  final case class User(id: UserId, name: UserName)
 
   final case class UserNameParam(value: NonEmptyString) {
     def toDomain: UserName = UserName(value.value.toLowerCase)

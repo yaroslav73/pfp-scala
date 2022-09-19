@@ -1,9 +1,7 @@
 package services
 
 import dev.profunktor.auth.jwt.JwtToken
-import domain.Auth.{ Password, User, UserName }
-import io.circe.Encoder
-import io.circe.generic.semiauto.deriveEncoder
+import domain.Auth.{ Password, UserName }
 
 trait Auth[F[_]] {
   def newUser(username: UserName, password: Password): F[JwtToken]
