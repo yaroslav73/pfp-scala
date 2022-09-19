@@ -2,7 +2,7 @@ package http.routes.auth
 
 import cats.MonadThrow
 import cats.implicits.{ catsSyntaxApplicativeError, toFlatMapOps }
-import domain.Auth.{ CreateUser, UserNameExist }
+import domain.Auth.{ CreateUser, UserNameExist, jwtTokenEncoder }
 import http.routes.RefinedRequestDecoder
 import org.http4s.HttpRoutes
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
@@ -10,7 +10,6 @@ import org.http4s.circe.JsonDecoder
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
 import services.Auth
-import services.Auth.jwtTokenEncoder
 
 final case class UserRoutes[F[_]: JsonDecoder: MonadThrow](auth: Auth[F]) extends Http4sDsl[F] {
   private[routes] val prefixPath = "/auth"
