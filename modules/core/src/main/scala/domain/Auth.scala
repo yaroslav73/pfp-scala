@@ -35,10 +35,14 @@ object Auth {
 
   case object TokenNotFound extends NoStackTrace
 
+  implicit val userNameEncoder: Encoder[UserName]                   = deriveEncoder[UserName]
+  implicit val userIdEncoder: Encoder[UserId]                       = deriveEncoder[UserId]
+  implicit val encryptedPasswordEncoder: Encoder[EncryptedPassword] = deriveEncoder[EncryptedPassword]
+
   implicit val isUserId: IsUUID[UserId] = new IsUUID[UserId] {
     def _UUID: Iso[UUID, UserId] = Iso[UUID, UserId](uuid => UserId(uuid))(userId => userId.value)
   }
-  implicit val userIdEncoder: Encoder[UserId] = deriveEncoder[UserId]
+
   implicit val userNameParamDecoder: Decoder[UserNameParam] = new Decoder[UserNameParam] {
     override def apply(c: HCursor): Result[UserNameParam] =
       c.downField("username").as[String] match {
