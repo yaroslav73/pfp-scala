@@ -1,5 +1,6 @@
 package domain
 
+import cats.Show
 import domain.Auth.UserId
 import domain.Cart.Quantity
 import domain.Item.ItemId
@@ -23,6 +24,8 @@ object Cart {
   final case class ShoppingCartExpiration(value: FiniteDuration)
 
   final case class CartNotFound(userId: UserId) extends NoStackTrace
+
+  implicit val cartTotalShow: Show[CartTotal] = (cartTotal: CartTotal) => cartTotal.toString
 
   implicit val quantityEncoder: Encoder[Quantity]   = deriveEncoder[Quantity]
   implicit val quantityDecoder: Decoder[Quantity]   = deriveDecoder[Quantity]

@@ -1,5 +1,6 @@
 package domain
 
+import cats.Show
 import domain.Card.{ CVV, CardHolder, CardNumber, Expiration }
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.boolean.And
@@ -31,6 +32,8 @@ object Card {
   final case class Expiration(value: CardExpirationPredicate)
 
   final case class CVV(value: CardCVVPredicate)
+
+  implicit val cardShow: Show[Card] = (card: Card) => card.toString
 
   implicit val cardHolderDecoder: Decoder[CardHolder]     = deriveDecoder[CardHolder]
   implicit val cardHolderEncoder: Encoder[CardHolder]     = deriveEncoder[CardHolder]

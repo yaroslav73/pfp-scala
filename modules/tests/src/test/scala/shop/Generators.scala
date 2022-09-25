@@ -1,13 +1,15 @@
+package shop
+
 import domain.Auth.{ UserId, UserName }
-import domain.{ Brand, Card, Cart, Category, Item }
 import domain.Brand.{ BrandId, BrandName }
 import domain.Card.{ CVV, CardHolder, CardNumber, Expiration }
 import domain.Cart.{ CartItem, CartTotal, Quantity }
 import domain.Category.{ CategoryId, CategoryName }
 import domain.Item.{ ItemDescription, ItemId, ItemName }
+import domain.Order.{ OrderId, PaymentId }
+import domain.{ Brand, Card, Cart, Category, Item }
 import eu.timepit.refined.api.Refined
 import http.auth.User
-import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen
 import squants.market.{ Money, USD }
 
@@ -29,6 +31,12 @@ object Generators {
     Gen.posNum[Long].map { value =>
       USD(BigDecimal(value))
     }
+
+  val paymentIdGen: Gen[PaymentId] =
+    idGen(PaymentId.apply)
+
+  val orderIdGen: Gen[OrderId] =
+    idGen(OrderId.apply)
 
   val brandIdGen: Gen[BrandId] =
     idGen(BrandId.apply)

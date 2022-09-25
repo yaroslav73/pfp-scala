@@ -1,5 +1,6 @@
 package domain
 
+import cats.Show
 import domain.Cart.Quantity
 import domain.Item.ItemId
 import domain.Order.{ OrderId, PaymentId }
@@ -22,6 +23,9 @@ object Order {
   final case class OrderId(uuid: UUID)
 
   final case class PaymentId(uuid: UUID)
+
+  implicit val orderIdShow: Show[OrderId]     = (orderId: OrderId) => orderId.toString
+  implicit val paymentIdShow: Show[PaymentId] = (paymentId: PaymentId) => paymentId.toString
 
   implicit val isOrderId: IsUUID[OrderId] = new IsUUID[OrderId] {
     def _UUID: Iso[UUID, OrderId] = Iso[UUID, OrderId](uuid => OrderId(uuid))(orderId => orderId.uuid)
