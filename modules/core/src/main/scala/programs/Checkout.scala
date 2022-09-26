@@ -23,35 +23,33 @@ final case class Checkout[F[_]: Background: Logger: MonadThrow: Retry](
   policy: RetryPolicy[F],
 ) {
   def process(userId: UserId, card: Card): F[OrderId] = {
-    for {
-      c   <- cart.get(userId)
-      pid <- payments.process(Payment(userId, c.total, card))
-      oid <- orders.create(userId, pid, c.items, c.total)
-      _   <- cart.delete(userId)
-    } yield oid
-
     cart
       .get(userId)
       .ensure(EmptyCartError)(_.items.nonEmpty)
       .flatMap {
         case CartTotal(items, total) =>
           for {
-            pid <- payments.process(Payment(userId, total, card))
-            oid <- orders.create(userId, pid, items, total)
-            _   <- cart.delete(userId)
+            pid <- processPayment(Payment(userId, total, card))
+            oid <- createOrder(userId, pid, items, total)
+            _   <- cart.delete(userId).attempt.void
           } yield oid
       }
   }
 
   private def processPayment(in: Payment): F[PaymentId] =
-    Retry[F].retry(policy, Retriable.Payments)(payments.process(in)).adaptError {
-      case e => PaymentError(Option(e.getMessage).getOrElse("Unknown"))
-    }
+    Retry[F]
+      .retry(policy, Retriable.Payments)(payments.process(in))
+      .adaptError {
+        case e => PaymentError(Option(e.getMessage).getOrElse("Unknown"))
+      }
 
   private def createOrder(userId: UserId, paymentId: PaymentId, items: List[CartItem], total: Money): F[OrderId] = {
-    val action = Retry[F].retry(policy, Retriable.Orders)(orders.create(userId, paymentId, items, total)).adaptError {
-      case e => OrderError(e.getMessage)
-    }
+    val action =
+      Retry[F]
+        .retry(policy, Retriable.Orders)(orders.create(userId, paymentId, items, total))
+        .adaptError {
+          case e => OrderError(e.getMessage)
+        }
 
     def backgroundAction(fa: F[OrderId]): F[OrderId] =
       fa.onError {
