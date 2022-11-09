@@ -1,5 +1,6 @@
 package domain
 
+import cats.Show
 import domain.Brand.BrandId
 import domain.Cart.{ CartItem, Quantity }
 import domain.Category.CategoryId
@@ -110,6 +111,8 @@ object Item {
   }
 
   final case class UpdateItem(itemId: ItemId, price: Money)
+
+  implicit val itemShow: Show[Item] = (item: Item) => item.toString
 
   implicit val itemDescriptionEncoder: Encoder[ItemDescription] = deriveEncoder[ItemDescription]
   implicit val itemNameEncoder: Encoder[ItemName]               = deriveEncoder[ItemName]

@@ -5,9 +5,11 @@ import cats.implicits.catsSyntaxSemigroup
 import io.circe.Encoder
 import io.circe.syntax.EncoderOps
 import org.http4s.circe._
-import org.http4s.{ HttpRoutes, Request, Status }
+import org.http4s.{HttpRoutes, Request, Status}
 import weaver.scalacheck.Checkers
-import weaver.{ Expectations, SimpleIOSuite }
+import weaver.{Expectations, SimpleIOSuite}
+
+import scala.util.control.NoStackTrace
 
 trait HttpSuite extends SimpleIOSuite with Checkers {
   def expectedHttpBodyAndStatus[A: Encoder](
@@ -37,4 +39,6 @@ trait HttpSuite extends SimpleIOSuite with Checkers {
       case Right(_) => failure("expected a failure")
     }
   }
+
+  protected case object DummyError extends NoStackTrace
 }

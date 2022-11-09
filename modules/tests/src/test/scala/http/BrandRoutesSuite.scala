@@ -14,8 +14,6 @@ import services.Brands
 import shop.Generators.brandGen
 import suits.HttpSuite
 
-import scala.util.control.NoStackTrace
-
 object BrandRoutesSuite extends HttpSuite {
   test("GET brands succeeds") {
     forall(Gen.listOf(brandGen)) { brands =>
@@ -42,8 +40,6 @@ object BrandRoutesSuite extends HttpSuite {
   private def failingBrands(brands: List[Brand]): Brands[IO] = new TestBrands {
     override def findAll: IO[List[Brand]] = IO.raiseError(DummyError) *> IO.pure(brands)
   }
-
-  protected case object DummyError extends NoStackTrace
 
   protected class TestBrands extends Brands[IO] {
     override def findAll: IO[List[Brand]]                         = IO.pure(List.empty)
