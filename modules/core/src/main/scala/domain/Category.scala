@@ -1,5 +1,6 @@
 package domain
 
+import cats.Show
 import domain.Category.{ CategoryId, CategoryName }
 import eu.timepit.refined.types.string.NonEmptyString
 import io.circe.generic.semiauto.deriveEncoder
@@ -31,6 +32,8 @@ object Category {
   implicit val isCategoryId: IsUUID[CategoryId] = new IsUUID[CategoryId] {
     def _UUID: Iso[UUID, CategoryId] = Iso[UUID, CategoryId](uuid => CategoryId(uuid))(categoryId => categoryId.value)
   }
+
+  implicit val categoryShow: Show[Category] = (category: Category) => category.toString
 
   implicit val categoryNameEncoder: Encoder[CategoryName] = deriveEncoder[CategoryName]
   implicit val categoryIdEncoder: Encoder[CategoryId]     = deriveEncoder[CategoryId]
