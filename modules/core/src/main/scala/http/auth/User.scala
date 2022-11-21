@@ -1,5 +1,6 @@
 package http.auth
 
+import cats.Show
 import dev.profunktor.auth.jwt.JwtSymmetricAuth
 import domain.Auth.{ EncryptedPassword, UserId, UserName }
 import io.circe.Encoder
@@ -18,6 +19,8 @@ object User {
   }
 
   final case class AdminUser(user: User)
+
+  implicit val commonUserShow: Show[CommonUser] = (commonUser: CommonUser) => commonUser.toString
 
   implicit val userEncoder: Encoder[User]                         = deriveEncoder[User]
   implicit val userWithPasswordEncoder: Encoder[UserWithPassword] = deriveEncoder[UserWithPassword]

@@ -10,6 +10,7 @@ import domain.Order.{ OrderId, PaymentId }
 import domain.{ Brand, Card, Cart, Category, Item }
 import eu.timepit.refined.api.Refined
 import http.auth.User
+import http.auth.User.CommonUser
 import org.scalacheck.Gen
 import squants.market.{ Money, USD }
 
@@ -139,4 +140,6 @@ object Generators {
       id   <- userIdGen
       name <- userNameGen
     } yield User(id, name)
+
+  val commonUserGen: Gen[CommonUser] = userGen.map(CommonUser)
 }

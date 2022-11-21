@@ -3,7 +3,7 @@ package domain
 import cats.Show
 import domain.Brand.{ BrandId, BrandName }
 import eu.timepit.refined.types.string.NonEmptyString
-import io.circe.generic.semiauto.deriveEncoder
+import io.circe.generic.semiauto.{ deriveDecoder, deriveEncoder }
 import io.circe.refined.{ refinedDecoder, refinedEncoder }
 import io.circe.{ Decoder, Encoder }
 import monocle.Iso
@@ -37,6 +37,9 @@ object Brand {
   implicit val brandNameShow: Show[BrandName] = (brandName: BrandName) => brandName.toString
 
   implicit val brandNameEncoder: Encoder[BrandName] = deriveEncoder[BrandName]
+  implicit val brandNameDecoder: Decoder[BrandName] = deriveDecoder[BrandName]
   implicit val brandIdEncoder: Encoder[BrandId]     = deriveEncoder[BrandId]
+  implicit val brandIdDecoder: Decoder[BrandId]     = deriveDecoder[BrandId]
   implicit val brandEncoder: Encoder[Brand]         = deriveEncoder[Brand]
+  implicit val brandDecoder: Decoder[Brand]         = deriveDecoder[Brand]
 }

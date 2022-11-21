@@ -25,12 +25,15 @@ object Cart {
 
   final case class CartNotFound(userId: UserId) extends NoStackTrace
 
+  implicit val cartShow: Show[Cart]           = (cart: Cart) => cart.toString
   implicit val cartTotalShow: Show[CartTotal] = (cartTotal: CartTotal) => cartTotal.toString
 
   implicit val quantityEncoder: Encoder[Quantity]   = deriveEncoder[Quantity]
   implicit val quantityDecoder: Decoder[Quantity]   = deriveDecoder[Quantity]
   implicit val cartEncoder: Encoder[Cart]           = deriveEncoder[Cart]
   implicit val cartDecoder: Decoder[Cart]           = deriveDecoder[Cart]
-  implicit val cartItemDecoder: Encoder[CartItem]   = deriveEncoder[CartItem]
-  implicit val cartTotalDecoder: Encoder[CartTotal] = deriveEncoder[CartTotal]
+  implicit val cartItemEncoder: Encoder[CartItem]   = deriveEncoder[CartItem]
+  implicit val cartItemDecoder: Decoder[CartItem]   = deriveDecoder[CartItem]
+  implicit val cartTotalEncoder: Encoder[CartTotal] = deriveEncoder[CartTotal]
+  implicit val cartTotalDecoder: Decoder[CartTotal] = deriveDecoder[CartTotal]
 }

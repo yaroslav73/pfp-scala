@@ -8,7 +8,7 @@ import domain.Item.{ ItemDescription, ItemId, ItemName }
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.string.{ Uuid, ValidBigDecimal }
 import eu.timepit.refined.types.string.NonEmptyString
-import io.circe.generic.semiauto.deriveEncoder
+import io.circe.generic.semiauto.{ deriveDecoder, deriveEncoder }
 import io.circe.refined.{ refinedDecoder, refinedEncoder }
 import io.circe.{ Decoder, Encoder }
 import monocle.Iso
@@ -29,9 +29,10 @@ case class Item(
     CartItem(this, quantity)
 }
 object Item {
-  case class ItemId(value: UUID)
+  final case class ItemId(value: UUID)
 
   object ItemId {
+    implicit val showItemId: Show[ItemId] = (itemId: ItemId) => itemId.toString
     implicit val isItemId: IsUUID[ItemId] = new IsUUID[ItemId] {
       def _UUID: Iso[UUID, ItemId] = Iso[UUID, ItemId](uuid => ItemId(uuid))(itemId => itemId.value)
     }
@@ -115,7 +116,11 @@ object Item {
   implicit val itemShow: Show[Item] = (item: Item) => item.toString
 
   implicit val itemDescriptionEncoder: Encoder[ItemDescription] = deriveEncoder[ItemDescription]
+  implicit val itemDescriptionDecoder: Decoder[ItemDescription] = deriveDecoder[ItemDescription]
   implicit val itemNameEncoder: Encoder[ItemName]               = deriveEncoder[ItemName]
+  implicit val itemNameDecoder: Decoder[ItemName]               = deriveDecoder[ItemName]
   implicit val itemIdEncoder: Encoder[ItemId]                   = deriveEncoder[ItemId]
+  implicit val itemIdDecoder: Decoder[ItemId]                   = deriveDecoder[ItemId]
   implicit val itemEncoder: Encoder[Item]                       = deriveEncoder[Item]
+  implicit val itemDecoder: Decoder[Item]                       = deriveDecoder[Item]
 }

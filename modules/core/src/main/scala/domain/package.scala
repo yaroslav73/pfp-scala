@@ -1,7 +1,8 @@
 import cats.Monoid
 import domain.Item.ItemId
-import io.circe.{ Encoder, Json, KeyDecoder, KeyEncoder }
-import squants.market.{ Money, USD }
+import io.circe.Decoder.Result
+import io.circe.{ Decoder, Encoder, HCursor, Json, KeyDecoder, KeyEncoder }
+import squants.market.{ Currency, Money, USD }
 
 import java.util.UUID
 import scala.util.Try
@@ -14,9 +15,19 @@ package object domain {
         "currency" -> Json.fromString(a.currency.code),
       )
   }
+
+  // TODO: how to supported other currency?
+  implicit val moneyDecoder: Decoder[Money] = new Decoder[Money] {
+    def apply(c: HCursor): Result[Money] =
+      for {
+        value <- c.downField("value").as[BigDecimal]
+      } yield Money(value, USD)
+  }
+
   implicit val itemIdKeyEncoder: KeyEncoder[ItemId] = new KeyEncoder[ItemId] {
     def apply(key: ItemId): String = key.value.toString
   }
+
   implicit val itemIdKeyDecoder: KeyDecoder[ItemId] = new KeyDecoder[ItemId] {
     def apply(key: String): Option[ItemId] = Try(UUID.fromString(key)).map(uuid => ItemId(uuid)).toOption
   }

@@ -1,11 +1,11 @@
 package domain
 
 import cats.Show
-import domain.Category.{ CategoryId, CategoryName }
+import domain.Category.{CategoryId, CategoryName}
 import eu.timepit.refined.types.string.NonEmptyString
-import io.circe.generic.semiauto.deriveEncoder
-import io.circe.refined.{ refinedDecoder, refinedEncoder }
-import io.circe.{ Decoder, Encoder }
+import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
+import io.circe.refined.{refinedDecoder, refinedEncoder}
+import io.circe.{Decoder, Encoder}
 import monocle.Iso
 import optics.IsUUID
 
@@ -36,6 +36,9 @@ object Category {
   implicit val categoryShow: Show[Category] = (category: Category) => category.toString
 
   implicit val categoryNameEncoder: Encoder[CategoryName] = deriveEncoder[CategoryName]
+  implicit val categoryNameDecoder: Decoder[CategoryName] = deriveDecoder[CategoryName]
   implicit val categoryIdEncoder: Encoder[CategoryId]     = deriveEncoder[CategoryId]
+  implicit val categoryIdDecoder: Decoder[CategoryId]     = deriveDecoder[CategoryId]
   implicit val categoryEncoder: Encoder[Category]         = deriveEncoder[Category]
+  implicit val categoryDecoder: Decoder[Category]         = deriveDecoder[Category]
 }
