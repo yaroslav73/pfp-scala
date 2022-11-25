@@ -7,7 +7,7 @@ import domain.Cart.{ CartItem, CartTotal, Quantity }
 import domain.Category.{ CategoryId, CategoryName }
 import domain.Item.{ ItemDescription, ItemId, ItemName }
 import domain.Order.{ OrderId, PaymentId }
-import domain.{ Brand, Card, Cart, Category, Item }
+import domain.{ Brand, Card, Cart, Category, Item, Payment }
 import eu.timepit.refined.api.Refined
 import http.auth.User
 import http.auth.User.CommonUser
@@ -142,4 +142,11 @@ object Generators {
     } yield User(id, name)
 
   val commonUserGen: Gen[CommonUser] = userGen.map(CommonUser)
+
+  val paymentGen: Gen[Payment] =
+    for {
+      userId <- userIdGen
+      total  <- moneyGen
+      card   <- cardGen
+    } yield Payment(userId, total, card)
 }

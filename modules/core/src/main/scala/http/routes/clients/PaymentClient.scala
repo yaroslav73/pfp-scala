@@ -2,6 +2,7 @@ package http.routes.clients
 
 import cats.effect.kernel.MonadCancelThrow
 import cats.implicits.{ catsSyntaxApplicativeErrorId, catsSyntaxEither, toFlatMapOps }
+import config.Types.PaymentConfig
 import domain.Order.{ PaymentError, PaymentId }
 import domain.Payment
 import io.circe.generic.codec.DerivedAsObjectCodec.deriveCodec
@@ -17,13 +18,11 @@ trait PaymentClient[F[_]] {
 }
 
 object PaymentClient {
-  def make[F[_]: JsonDecoder: MonadCancelThrow](client: Client[F]): PaymentClient[F] = {
+  def make[F[_]: JsonDecoder: MonadCancelThrow](config: PaymentConfig, client: Client[F]): PaymentClient[F] = {
     new PaymentClient[F] with Http4sClientDsl[F] {
-      val baseUri = "http: //localhost:8080/api/v1"
-
       def process(payment: Payment): F[PaymentId] =
         Uri
-          .fromString(baseUri + "/payments")
+          .fromString(config.uri.value.toString() + "/payments")
           .liftTo[F]
           .flatMap { uri =>
             client.run(POST(payment, uri)).use { resp =>

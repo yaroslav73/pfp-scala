@@ -9,4 +9,7 @@ object Types {
 
   final case class JwtAccessTokenKeyConfig(secret: NonEmptyString)
   final case class PasswordSalt(secret: NonEmptyString)
+
+  final case class PaymentURI(value: NonEmptyString)
+  final case class PaymentConfig(uri: PaymentURI)
 }
