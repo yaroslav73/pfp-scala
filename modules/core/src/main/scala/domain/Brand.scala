@@ -1,6 +1,6 @@
 package domain
 
-import cats.Show
+import cats.{ Eq, Show }
 import domain.Brand.{ BrandId, BrandName }
 import eu.timepit.refined.types.string.NonEmptyString
 import io.circe.generic.semiauto.{ deriveDecoder, deriveEncoder }
@@ -30,6 +30,11 @@ object Brand {
 
   implicit val isBrandId: IsUUID[BrandId] = new IsUUID[BrandId] {
     def _UUID: Iso[UUID, BrandId] = Iso[UUID, BrandId](uuid => BrandId(uuid))(brandId => brandId.value)
+  }
+
+  implicit val brandIdEq: Eq[BrandId] = new Eq[BrandId] {
+    override def eqv(x: BrandId, y: BrandId): Boolean =
+      x.value.equals(y.value)
   }
 
   implicit val brandShow: Show[Brand]         = (brand: Brand) => brand.toString

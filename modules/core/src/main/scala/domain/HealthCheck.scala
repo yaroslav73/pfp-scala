@@ -1,5 +1,6 @@
 package domain
 
+import cats.Eq
 import derevo.circe.magnolia.encoder
 import derevo.derive
 import io.circe.Encoder
@@ -27,6 +28,10 @@ object HealthCheck {
       case Okay        => true
       case Unreachable => false
     }(status => if (status) Okay else Unreachable)
+
+    implicit val eqStatus: Eq[Status] = new Eq[Status] {
+      override def eqv(x: Status, y: Status): Boolean = x == y
+    }
 
     implicit val jsonEncoder: Encoder[Status] =
       Encoder.forProduct1("status")(_.toString)

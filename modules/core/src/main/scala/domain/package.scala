@@ -1,4 +1,4 @@
-import cats.Monoid
+import cats.{ Eq, Monoid }
 import domain.Item.ItemId
 import io.circe.Decoder.Result
 import io.circe.{ Decoder, Encoder, HCursor, Json, KeyDecoder, KeyEncoder }
@@ -32,10 +32,13 @@ package object domain {
     def apply(key: String): Option[ItemId] = Try(UUID.fromString(key)).map(uuid => ItemId(uuid)).toOption
   }
 
-  // TODO: Add law tests for monoid instance.
-  implicit val monoidMoney: Monoid[Money] = new Monoid[Money] {
-    def empty: Money = USD(0)
+  implicit val eqMoney: Eq[Money] = new Eq[Money] {
+    override def eqv(x: Money, y: Money): Boolean =
+      x.amount.equals(y.amount) && x.currency.name.equals(y.currency.name)
+  }
 
+  implicit val monoidMoney: Monoid[Money] = new Monoid[Money] {
+    def empty: Money                       = USD(0)
     def combine(x: Money, y: Money): Money = x + y
   }
 }
