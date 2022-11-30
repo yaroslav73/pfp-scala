@@ -26,6 +26,7 @@ object Cart {
   final case class CartNotFound(userId: UserId) extends NoStackTrace
 
   implicit val cartShow: Show[Cart]           = (cart: Cart) => cart.toString
+  implicit val quantityShow: Show[Quantity]   = (quantity: Quantity) => quantity.toString
   implicit val cartItemShow: Show[CartItem]   = (cartItem: CartItem) => cartItem.toString
   implicit val cartTotalShow: Show[CartTotal] = (cartTotal: CartTotal) => cartTotal.toString
 

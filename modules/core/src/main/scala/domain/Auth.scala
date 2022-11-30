@@ -42,6 +42,7 @@ object Auth {
 
   implicit val userIdShow: Show[UserId]     = (userId: UserId) => userId.toString
   implicit val userNameShow: Show[UserName] = (userName: UserName) => userName.toString
+  implicit val passwordShow: Show[Password] = (password: Password) => password.toString
   implicit val encryptedPasswordShow: Show[EncryptedPassword] = (encryptedPassword: EncryptedPassword) =>
     encryptedPassword.toString
 
