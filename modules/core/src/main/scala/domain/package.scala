@@ -1,4 +1,4 @@
-import cats.{ Eq, Monoid }
+import cats.{ Eq, Monoid, Show }
 import domain.Item.ItemId
 import io.circe.Decoder.Result
 import io.circe.{ Decoder, Encoder, HCursor, Json, KeyDecoder, KeyEncoder }
@@ -31,6 +31,8 @@ package object domain {
   implicit val itemIdKeyDecoder: KeyDecoder[ItemId] = new KeyDecoder[ItemId] {
     def apply(key: String): Option[ItemId] = Try(UUID.fromString(key)).map(uuid => ItemId(uuid)).toOption
   }
+
+  implicit val showMoney: Show[Money] = (money: Money) => money.toString
 
   implicit val eqMoney: Eq[Money] = new Eq[Money] {
     override def eqv(x: Money, y: Money): Boolean =

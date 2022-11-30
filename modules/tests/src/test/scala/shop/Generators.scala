@@ -1,18 +1,18 @@
 package shop
 
-import domain.Auth.{ UserId, UserName }
-import domain.Brand.{ BrandId, BrandName }
-import domain.Card.{ CVV, CardHolder, CardNumber, Expiration }
-import domain.Cart.{ CartItem, CartTotal, Quantity }
-import domain.Category.{ CategoryId, CategoryName }
-import domain.Item.{ ItemDescription, ItemId, ItemName }
-import domain.Order.{ OrderId, PaymentId }
-import domain.{ Brand, Card, Cart, Category, Item, Payment }
+import domain.Auth.{EncryptedPassword, Password, UserId, UserName}
+import domain.Brand.{BrandId, BrandName}
+import domain.Card.{CVV, CardHolder, CardNumber, Expiration}
+import domain.Cart.{CartItem, CartTotal, Quantity}
+import domain.Category.{CategoryId, CategoryName}
+import domain.Item.{ItemDescription, ItemId, ItemName}
+import domain.Order.{OrderId, PaymentId}
+import domain.{Brand, Card, Cart, Category, Item, Payment}
 import eu.timepit.refined.api.Refined
 import http.auth.User
 import http.auth.User.CommonUser
 import org.scalacheck.Gen
-import squants.market.{ Money, USD }
+import squants.market.{Money, USD}
 
 import java.util.UUID
 
@@ -27,6 +27,12 @@ object Generators {
 
   def idGen[A](f: UUID => A): Gen[A] =
     Gen.uuid.map(f)
+
+  val passwordGen: Gen[Password] =
+    nesGen(Password.apply)
+
+  val encryptedPasswordGen: Gen[EncryptedPassword] =
+    nesGen(EncryptedPassword.apply)
 
   val moneyGen: Gen[Money] =
     Gen.posNum[Long].map { value =>

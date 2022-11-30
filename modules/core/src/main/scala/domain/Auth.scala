@@ -40,7 +40,10 @@ object Auth {
 
   case object TokenNotFound extends NoStackTrace
 
-  implicit val userIdShow: Show[UserId] = (userId: UserId) => userId.toString
+  implicit val userIdShow: Show[UserId]     = (userId: UserId) => userId.toString
+  implicit val userNameShow: Show[UserName] = (userName: UserName) => userName.toString
+  implicit val encryptedPasswordShow: Show[EncryptedPassword] = (encryptedPassword: EncryptedPassword) =>
+    encryptedPassword.toString
 
   implicit val userNameEncoder: Encoder[UserName]                   = deriveEncoder[UserName]
   implicit val userIdEncoder: Encoder[UserId]                       = deriveEncoder[UserId]
