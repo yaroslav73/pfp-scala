@@ -1,12 +1,30 @@
 package config
 
-import ciris.{ConfigValue, Secret, env}
-import config.Types.{AdminJwtConfig, AdminUserTokenConfig, AppConfig, CheckoutConfig, HttpClientConfig, HttpServerConfig, JwtAccessTokenKeyConfig, JwtClaimConfig, JwtSecretKeyConfig, PasswordSalt, PaymentConfig, PaymentURI, PostgreSQLConfig, RedisConfig, TokenExpiration}
-import dev.profunktor.redis4cats.connection.RedisURI
+import cats.effect.kernel.Async
+import ciris.{ ConfigValue, Secret, env }
+import config.Types.{
+  AdminJwtConfig,
+  AdminUserTokenConfig,
+  AppConfig,
+  CheckoutConfig,
+  HttpClientConfig,
+  HttpServerConfig,
+  JwtAccessTokenKeyConfig,
+  JwtClaimConfig,
+  JwtSecretKeyConfig,
+  PasswordSalt,
+  PaymentConfig,
+  PaymentURI,
+  PostgreSQLConfig,
+  RedisConfig,
+  RedisURI,
+  TokenExpiration
+}
 import cats.syntax.all._
 import ciris._
 import ciris.refined._
 import com.comcast.ip4s._
+import config.AppEnvironment.{ Prod, Test }
 import domain.Cart.ShoppingCartExpiration
 import eu.timepit.refined.auto._
 import eu.timepit.refined.cats._
@@ -15,6 +33,15 @@ import eu.timepit.refined.types.string.NonEmptyString
 import scala.concurrent.duration.DurationInt
 
 object Config {
+  def apply[F[_]: Async]: F[AppConfig] =
+    env("SC_APP_ENV")
+      .as[AppEnvironment]
+      .flatMap {
+        case Test => default[F](RedisURI("redis://localhost"), PaymentURI("https://payments.free.beeceptor.com"))
+        case Prod => default[F](RedisURI("redis://10.123.154.176"), PaymentURI("https://payments.net/api"))
+      }
+      .load[F]
+
   private def default[F[_]](redisURI: RedisURI, paymentURI: PaymentURI): ConfigValue[F, AppConfig] =
     (
       env("SC_JWT_SECRET_KEY").as[JwtSecretKeyConfig].secret,
