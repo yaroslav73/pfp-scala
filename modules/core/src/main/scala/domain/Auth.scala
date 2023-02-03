@@ -33,6 +33,8 @@ object Auth {
   final case class CreateUser(username: UserNameParam, password: PasswordParam)
   final case class LoginUser(username: UserNameParam, password: PasswordParam)
 
+  final case class ClaimContent(uuid: UUID)
+
   final case class UserNotFound(username: UserName) extends NoStackTrace
   final case class UserNameExist(username: UserName) extends NoStackTrace
   final case class InvalidPassword(username: UserName) extends NoStackTrace
@@ -74,4 +76,6 @@ object Auth {
   implicit val createUserDecoder: Decoder[CreateUser] = deriveDecoder[CreateUser]
 
   implicit val jwtTokenEncoder: Encoder[JwtToken] = deriveEncoder[JwtToken]
+
+  implicit val claimContentDecoder: Decoder[ClaimContent] = Decoder.forProduct1("uuid")(ClaimContent.apply)
 }
