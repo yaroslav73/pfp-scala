@@ -2,9 +2,8 @@ package config
 
 import cats.Show
 import ciris.refined.refTypeConfigDecoder
-import ciris.{ ConfigDecoder, ConfigError, ConfigKey, Secret }
+import ciris.{ ConfigDecoder, Secret }
 import com.comcast.ip4s.{ Host, Port }
-import dev.profunktor.redis4cats.connection.RedisURI
 import domain.Cart.ShoppingCartExpiration
 import eu.timepit.refined.types.net.UserPortNumber
 import eu.timepit.refined.types.numeric.PosInt

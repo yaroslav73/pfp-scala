@@ -1,6 +1,5 @@
 package sql
 
-import domain.Auth
 import domain.Auth.{ EncryptedPassword, UserId, UserName }
 import domain.Brand.{ BrandId, BrandName }
 import domain.Category.{ CategoryId, CategoryName }

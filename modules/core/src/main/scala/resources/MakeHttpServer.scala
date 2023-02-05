@@ -26,6 +26,6 @@ object MakeHttpServer {
         .withPort(config.port)
         .withHttpApp(httpApp)
         .build
-        .evalTap(showEmberBanner)
+        .evalTap(showEmberBanner[F])
   }
 }

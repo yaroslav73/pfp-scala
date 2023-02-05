@@ -1,7 +1,7 @@
 package config
 
 import cats.effect.kernel.Async
-import ciris.{ ConfigValue, Secret, env }
+import ciris.{ ConfigValue, env }
 import config.Types.{
   AdminJwtConfig,
   AdminUserTokenConfig,
@@ -21,7 +21,6 @@ import config.Types.{
   TokenExpiration
 }
 import cats.syntax.all._
-import ciris._
 import ciris.refined._
 import com.comcast.ip4s._
 import config.AppEnvironment.{ Prod, Test }

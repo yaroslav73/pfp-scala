@@ -1,8 +1,8 @@
 import cats.{ Eq, Monoid, Show }
 import domain.Item.ItemId
 import io.circe.Decoder.Result
-import io.circe.{ Decoder, Encoder, HCursor, Json, KeyDecoder, KeyEncoder }
-import squants.market.{ Currency, Money, USD }
+import io.circe._
+import squants.market.{ Money, USD }
 
 import java.util.UUID
 import scala.util.Try

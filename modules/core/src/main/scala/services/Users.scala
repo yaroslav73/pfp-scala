@@ -2,8 +2,15 @@ package services
 
 import cats.effect.MonadCancelThrow
 import cats.effect.kernel.Resource
-import cats.implicits.{catsSyntaxApplicativeError, catsSyntaxApplicativeErrorId, catsSyntaxOptionId, none, toFlatMapOps, toFunctorOps}
-import domain.Auth.{EncryptedPassword, UserId, UserName, UserNameExist}
+import cats.implicits.{
+  catsSyntaxApplicativeError,
+  catsSyntaxApplicativeErrorId,
+  catsSyntaxOptionId,
+  none,
+  toFlatMapOps,
+  toFunctorOps
+}
+import domain.Auth.{ EncryptedPassword, UserId, UserName, UserNameExist }
 import domain.ID
 import effects.GenUUID
 import http.auth.User
