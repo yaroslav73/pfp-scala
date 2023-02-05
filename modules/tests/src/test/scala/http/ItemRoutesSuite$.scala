@@ -4,7 +4,7 @@ import cats.effect.IO
 import domain.Brand.{ BrandId, BrandName }
 import domain.Item.{ CreateItem, ItemId, UpdateItem }
 import domain.{ Brand, ID, Item }
-import http.routes.ItemsRoutes
+import http.routes.ItemRoutes
 import org.http4s.Method._
 import org.http4s._
 import org.http4s.client.dsl.io._
@@ -16,11 +16,11 @@ import suits.HttpSuite
 
 import java.util.UUID
 
-object ItemsRoutesSuite extends HttpSuite {
+object ItemRoutesSuite$ extends HttpSuite {
   test("GET items succeeds") {
     forall(Gen.listOf(itemGen)) { items =>
       val request = GET(uri"/items")
-      val routes  = new ItemsRoutes[IO](dataItems(items)).routes
+      val routes  = new ItemRoutes[IO](dataItems(items)).routes
 
       expectedHttpBodyAndStatus(routes, request)(items, Status.Ok)
     }
@@ -39,7 +39,7 @@ object ItemsRoutesSuite extends HttpSuite {
     forall(gen) {
       case (items, brand) =>
         val request = GET(uri"/items".withQueryParam("brand", brand.name.value))
-        val routes  = new ItemsRoutes[IO](dataItems(items)).routes
+        val routes  = new ItemRoutes[IO](dataItems(items)).routes
 
         val expected = items.find(_.brand.name == brand.name).toList
         expectedHttpBodyAndStatus(routes, request)(expected, Status.Ok)
@@ -49,7 +49,7 @@ object ItemsRoutesSuite extends HttpSuite {
   test("GET items fails") {
     forall(Gen.listOf(itemGen)) { items =>
       val request = GET(uri"/items")
-      val routes  = new ItemsRoutes[IO](failedItems(items)).routes
+      val routes  = new ItemRoutes[IO](failedItems(items)).routes
 
       expectedHttpFailure(routes, request)
     }

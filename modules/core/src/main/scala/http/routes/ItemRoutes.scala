@@ -10,7 +10,7 @@ import org.http4s.server.Router
 import org.http4s.{ HttpRoutes, ParseFailure, QueryParamDecoder }
 import services.Items
 
-final case class ItemsRoutes[F[_]: Monad](items: Items[F]) extends Http4sDsl[F] {
+final case class ItemRoutes[F[_]: Monad](items: Items[F]) extends Http4sDsl[F] {
   private[routes] val prefixPath = "/items"
 
   implicit val brandParamQueryParamDecoder: QueryParamDecoder[BrandParam] =
