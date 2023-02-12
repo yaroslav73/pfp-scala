@@ -6,7 +6,7 @@ ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / evictionErrorLevel := Level.Warn
 ThisBuild / scalafixDependencies += Libraries.organizeImports
 
-resolvers += Resolver.sonatypeRepo("snapshots")
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
 
 val scalafixCommonSettings = inConfig(IntegrationTest)(scalafixConfigSettings(IntegrationTest))
 lazy val root = (project in file("."))
@@ -46,7 +46,7 @@ lazy val core = (project in file("modules/core"))
     Docker / packageName := "shopping-cart",
     scalacOptions ++= List("-Ymacro-annotations", "-Yrangepos", "-Wconf:cat=unused:info"),
     scalafmtOnCompile := true,
-    resolvers += Resolver.sonatypeRepo("snapshots"),
+    resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
     Defaults.itSettings,
     scalafixCommonSettings,
     dockerBaseImage := "openjdk:11-jre-slim-buster",
